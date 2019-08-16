@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/campaign-app/static/css/main.f1056db5.chunk.css",
+    "main.js": "/campaign-app/static/js/main.4b77ae36.chunk.js",
+    "main.js.map": "/campaign-app/static/js/main.4b77ae36.chunk.js.map",
+    "runtime~main.js": "/campaign-app/static/js/runtime~main.04415047.js",
+    "runtime~main.js.map": "/campaign-app/static/js/runtime~main.04415047.js.map",
+    "static/js/2.c09a8693.chunk.js": "/campaign-app/static/js/2.c09a8693.chunk.js",
+    "static/js/2.c09a8693.chunk.js.map": "/campaign-app/static/js/2.c09a8693.chunk.js.map",
+    "index.html": "/campaign-app/index.html",
+    "precache-manifest.5b5fdcd1e1d861de4e36087507ca57ed.js": "/campaign-app/precache-manifest.5b5fdcd1e1d861de4e36087507ca57ed.js",
+    "service-worker.js": "/campaign-app/service-worker.js",
+    "static/css/main.f1056db5.chunk.css.map": "/campaign-app/static/css/main.f1056db5.chunk.css.map"
+  }
+}
