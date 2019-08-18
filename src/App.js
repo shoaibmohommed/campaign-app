@@ -4,34 +4,16 @@ import SearchBar from './components/SearchBar';
 import moment from 'moment';
 import CampaignTable from './components/CampaignTable';
 import _ from 'lodash';
-import Util from './Util';
+import Util, { isActive } from './Util';
 
 const { DATE_FORMAT, HTML_DATE_FIELD_FORMAT } = Util;
-
-
-// function to check if the campaign is still active 
-// or not according to the given logic.
-function isActive(campaign) {
-  const currentDate = moment();
-
-  const startDate = moment(campaign.startDate, DATE_FORMAT);
-  const endDate = moment(campaign.endDate, DATE_FORMAT);
-
-  if (currentDate.isBetween(startDate, endDate)) {
-    return true
-  }
-  return false;
-};
-
-let campaignData = [
-
-];
 
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       campaignTableData: [],
+      originalTableData: [],
       startDate: '',
       endDate: '',
       campaignName: ''
@@ -39,8 +21,8 @@ class App extends React.Component {
 
     // global method exposed for adding campaign data
     window.AddCampaigns = (newData) => {
-      let data = [...campaignData];
-      const { startDate, endDate, campaignName } = this.state;
+      const { startDate, endDate, campaignName, originalTableData } = this.state;
+      let data = [...originalTableData];
       data = data.concat(newData);
 
       let valueArr = data.map(item => item.id);
@@ -49,46 +31,36 @@ class App extends React.Component {
       let hasDuplicates = valueArr > uniqueValue;
       if (hasDuplicates) {
         console.log("Please check the data provided it must have unique id values");
-        return;
+        return false;
       }
-      campaignData = data;
-      this.onFilterApply({ startDate, endDate, campaignName });
+      this.setState({ originalTableData: data }, () => {
+        this.onFilterApply({ startDate, endDate, campaignName });
+      });
+      return true;
+
     }
   }
 
 
   onFilterApply = ({ startDate, endDate, campaignName }) => {
 
-    let filteredData = [...campaignData];
+    let filteredData = [...this.state.originalTableData];
 
-    // show record if startDate is in filter range
-    if (!_.isEmpty(startDate)) {
+
+    // show record if campaign start date or end date is in filter range
+    if (!_.isEmpty(startDate) && !_.isEmpty(endDate)) {
       filteredData = filteredData.filter(item => {
         let itemStartDate = moment(item.startDate, DATE_FORMAT);
         let itemEndDate = moment(item.endDate, DATE_FORMAT);
         let filterStartDate = moment(startDate, HTML_DATE_FIELD_FORMAT);
-        if (filterStartDate.isBetween(itemStartDate, itemEndDate)) {
-          return true
-        }
-        return false;
-      });
-    }
-
-    // show record if endDate is in filter range
-    if (!_.isEmpty(endDate)) {
-      let extraFilterRecords = filteredData.filter(item => {
-        let itemStartDate = moment(item.startDate, DATE_FORMAT);
-        let itemEndDate = moment(item.endDate, DATE_FORMAT);
         let filterEndDate = moment(endDate, HTML_DATE_FIELD_FORMAT);
-        if (filterEndDate.isBetween(itemStartDate, itemEndDate)) {
+
+        if (itemStartDate.isBetween(filterStartDate, filterEndDate)
+          || itemEndDate.isBetween(filterStartDate, filterEndDate)) {
           return true
         }
         return false;
       });
-
-      // merge data from startDate filter and endDate filter and removing duplicates
-      filteredData.concat(extraFilterRecords);
-      filteredData = _.uniqBy(filteredData, "id");
     }
 
     if (!_.isEmpty(campaignName)) {

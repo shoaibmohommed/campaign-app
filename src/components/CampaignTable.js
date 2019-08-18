@@ -42,7 +42,7 @@ const renderers = {
 };
 
 // functional component to render a table for all the campaigns
-const CampaignTable = ({ campaignTableData, onFilterApply }) => {
+const CampaignTable = ({ campaignTableData }) => {
     const columns = Object.keys(campaignTableData[0]);
     return <table>
         <TableHeader columns={columns} />
