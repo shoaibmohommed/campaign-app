@@ -19,26 +19,32 @@ const SearchBar = ({ onFilterApply }) => {
     }
 
     return <div className="searchBar">
-        <span>
-            <input type="date"
-                name="setStartDate"
-                value={startDate}
-                placeholder="Start Date"
-                onChange={onChange} />
-            <input type="date"
-                name="setEndDate"
-                value={endDate}
-                placeholder="End Date"
-                onChange={onChange} />
-        </span>
-        <span>
+        <div>
+            <div className="field-group text-left">
+                <label htmlFor="start">Start date:</label>
+                <input type="date"
+                    id="start"
+                    name="setStartDate"
+                    value={startDate}
+                    onChange={onChange} />
+            </div>
+            <div className="field-group text-left">
+                <label htmlFor="end">End date:</label>
+                <input type="date"
+                    id="end"
+                    name="setEndDate"
+                    value={endDate}
+                    onChange={onChange} />
+            </div>
+        </div>
+        <div>
             <input type="text"
                 name="setCampaignName"
                 value={campaignName}
                 placeholder="Search By Name"
                 onChange={onChange} />
             <button className="searchBtn" onClick={onSearchBtnClick}><i className="fa fa-search"></i></button>
-        </span>
+        </div>
     </div>
 }
 
