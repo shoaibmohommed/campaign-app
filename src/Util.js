@@ -16,6 +16,27 @@ export const isActive = function (campaign) {
         return true
     }
     return false;
-}
+};
+export const filterDataOnDate = function (filteredData, startDate, endDate) {
+    const { DATE_FORMAT, HTML_DATE_FIELD_FORMAT } = Util;
+    return filteredData.filter(item => {
+
+        let itemStartDate = moment(item.startDate, DATE_FORMAT);
+        let itemEndDate = moment(item.endDate, DATE_FORMAT);
+        let filterStartDate = moment(startDate, HTML_DATE_FIELD_FORMAT);
+        let filterEndDate = moment(endDate, HTML_DATE_FIELD_FORMAT);
+        if (itemStartDate.isBetween(filterStartDate, filterEndDate)
+            || itemEndDate.isBetween(filterStartDate, filterEndDate)) {
+            return true
+        }
+        return false;
+    });
+};
+export const filterDataOnCampaignName = function (filteredData, campaignName) {
+    return filteredData.filter(item =>
+        item.name.toLocaleLowerCase()
+            .indexOf(campaignName.toLocaleLowerCase()) > -1
+    )
+};
 
 export default Util;

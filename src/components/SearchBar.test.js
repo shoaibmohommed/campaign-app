@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import SearchBar from './SearchBar';
 
 it('renders without crashing', () => {
@@ -10,7 +10,7 @@ describe('Test Search Bar component', () => {
     const props = {
         onFilterApply: jest.fn()
     }
-    const searchBar = mount(<SearchBar {...props} />);
+    const searchBar = shallow(<SearchBar {...props} />);
 
     it('Start Date change', () => {
         const dateObj = '12/12/2012';

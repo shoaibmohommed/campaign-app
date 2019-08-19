@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import _ from 'lodash';
+import { isEmpty } from 'lodash';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -23,7 +23,7 @@ const SearchBar = ({ onFilterApply }) => {
     };
 
     const onSearchBtnClick = () => {
-        if ((!_.isEmpty(startDate) || !_.isEmpty(endDate)) && (_.isEmpty(startDate) || _.isEmpty(endDate))) {
+        if ((!isEmpty(startDate) || !isEmpty(endDate)) && (isEmpty(startDate) || isEmpty(endDate))) {
             toast.error("Either select both the start date and end date or do not select any of it.", {
                 position: toast.POSITION.TOP_LEFT
             });
@@ -36,7 +36,7 @@ const SearchBar = ({ onFilterApply }) => {
             return;
         }
 
-        onFilterApply({ ...{ startDate, endDate, campaignName } })
+        onFilterApply({ startDate, endDate, campaignName });
     }
 
     return <div className="searchBar">
@@ -57,15 +57,13 @@ const SearchBar = ({ onFilterApply }) => {
                     value={endDate}
                     onChange={onChange} />
             </div>
-        </div>
-        <div>
             <input type="text"
                 name="setCampaignName"
                 value={campaignName}
                 placeholder="Search By Name"
                 onChange={onChange} />
-            <button className="searchBtn" onClick={onSearchBtnClick}><i className="fa fa-search"></i></button>
         </div>
+        <button className="searchBtn" onClick={onSearchBtnClick}><i className="fa fa-search"></i> Search</button>
     </div>
 }
 
